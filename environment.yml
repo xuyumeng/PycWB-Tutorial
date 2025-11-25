@@ -388,7 +388,7 @@ dependencies:
       - gwdatafind==1.2.0
       - gwosc==0.7.2
       - gwpy==3.0.10
-      - htcondor==24.2.1
+      - htcondor==24
       - itsdangerous==2.2.0
       - ligotimegps==2.0.1
       - locket==1.0.0
