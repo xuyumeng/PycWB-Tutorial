@@ -13,6 +13,8 @@ dependencies:
   - cmake 
   - pkg-config
   - pip
+  - gwpy
+  - matplotlib<3.8
   - pip:
     - pycwb==0.30.1
     - wdm-wavelet
