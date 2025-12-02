@@ -1,0 +1,49 @@
+global:
+  work_dir: .
+steps:
+  - action: report.read_results.read_triggers
+    args:
+      run_dir: background
+      filters:
+        - "slag[0] != 0 or slag[1] != 0 or lag[0] != 0"
+    output_alias: 'background'
+  - action: report.read_results.read_live_time
+    args:
+      run_dir: background
+      filters:
+        - "shift[0] != 0 or shift[1] != 0 or lag != 0"
+    output_alias: 'livetime'
+  - action: report.far_rho.far_rho # this module will calculate the far_rho and pass the output to the downstream modules
+    args:
+      source: 'background'
+      livetime_key: 'livetime'
+      ranking_par: rho[0]
+      bin_size: 0.01
+      save: far_rho.json
+    output_alias: 'far_rho'
+  # fake open box
+  - action: report.read_results.read_triggers
+    args:
+      run_dir: background
+      filters:
+        - "lag[0]==0"
+        - "slag[0]==0"
+        - "slag[1]==0"
+    output_alias: 'lag_0_0'
+  - action: report.read_results.read_live_time
+    args:
+      run_dir: background
+      filters:
+        - "lag==0"
+        - "shift[0]==0"
+        - "shift[1]==0"
+    output_alias: 'livetime_zerolag'
+  - action: report.report.report_zero_lag
+    args:
+      source: 'lag_0_0'
+      livetime_key: 'livetime_zerolag'
+      far_rho_source: 'far_rho'
+  - action: report.report.report # generate report
+    args:
+      far_rho_source: 'far_rho'
+      output: public/
