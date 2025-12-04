@@ -14,6 +14,12 @@ For HTCondor submission, run:
 pycwb batch-setup user_parameters.yaml -c condor -d . -e pycwb-0.30.1 -j 1 -m 12G -g ligo.dev.o4.burst.allsky.cwboffline 
 ```
 
-> At the moment, you need to remove 
+> At the moment, you need to remove the `input` line from the generated condor submit file before submitting the job.
 
-## Explaination to the real world example
+## Output
+
+![output_example](./img/output.png)
+
+## Explanation to the real world example
+
+Check the notebook `playground.ipynb`
